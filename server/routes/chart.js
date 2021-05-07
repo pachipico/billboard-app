@@ -15,17 +15,22 @@ router.get("/getChart", (req, res) => {
 		return year + "-" + month + "-" + day;
 	}
 	var date = getFormatDate(new Date());
-
 	getChart("hot-100", date, (err, chart) => {
 		if (err) res.status(400).json({ success: false, err });
-		else res.status(200).json({ success: true, chart: chart.songs });
+		else
+			res
+				.status(200)
+				.json({ success: true, chart: chart.songs, week: chart.week });
 	});
 });
 
 router.post("/specificDateChart", (req, res) => {
 	getChart("hot-100", req.body.date, (err, chart) => {
 		if (err) res.status(400).json({ success: false, err });
-		else res.status(200).json({ success: true, chart: chart.songs });
+		else
+			res
+				.status(200)
+				.json({ success: true, chart: chart.songs, week: chart.week });
 	});
 });
 
