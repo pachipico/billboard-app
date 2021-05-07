@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Divider, Card, List, Avatar } from "antd";
-import { UpCircleOutlined, DownCircleOutlined } from "@ant-design/icons";
+import {
+	UpCircleOutlined,
+	DownCircleOutlined,
+	YoutubeFilled,
+} from "@ant-design/icons";
 const { Meta } = Card;
 
 function GridCard(props) {
@@ -59,24 +63,44 @@ function GridCard(props) {
 							style={{ paddingLeft: "60px" }}
 							avatar={<Avatar shape='square' size='large' src={song.cover} />}
 							title={
-								<a
-									style={{ textDecoration: "none" }}
-									href={`https://www.youtube.com/results?search_query=${song.title}&${song.artist}`}
-									target='_blank'
-								>
+								<p style={{ textDecoration: "none" }} target='_blank'>
 									{song.title}
-								</a>
+								</p>
 							}
 							description={song.artist}
 						/>
-						<span style={{ textAlign: "right", paddingRight: "10px" }}>
+						<List.Item.Meta title='lyrics' />
+						<List.Item.Meta
+							style={{
+								textAlign: "right",
+								paddingRight: "10px",
+							}}
+							description={
+								<a
+									href={`https://www.youtube.com/results?search_query=${song.title}&${song.artist}`}
+									target='_blank'
+								>
+									Search on{" "}
+									<span
+										style={{
+											color: "red",
+											fontWeight: "bold",
+										}}
+									>
+										YouTube
+										<YoutubeFilled style={{ marginLeft: "3px" }} />
+									</span>
+								</a>
+							}
+						/>
+						<div style={{ textAlign: "right", padding: "10px" }}>
 							<p style={{ margin: " 10px" }}>
 								Peak: {song.position.peakPosition}
 							</p>
 							<p style={{ margin: " 10px" }}>
 								Weeks on Chart: {song.position.weeksOnChart}
 							</p>
-						</span>
+						</div>
 
 						{positionChanges(song.rank, song.position.positionLastWeek)}
 					</List.Item>

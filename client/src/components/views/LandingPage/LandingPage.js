@@ -11,11 +11,13 @@ function LandingPage() {
 	const [Chart, setChart] = useState([]);
 	const [CurrentWeek, setCurrentWeek] = useState("");
 	const [IsToday, setIsToday] = useState(false);
+	const [Today, setToday] = useState("");
 
 	useEffect(() => {
 		Axios.get("/api/chart/getChart").then((response) => {
 			setChart(response.data.chart);
 			setCurrentWeek(response.data.week);
+			setToday(response.data.week);
 			setIsToday(true);
 			console.log(response.data.chart);
 		});
@@ -29,7 +31,11 @@ function LandingPage() {
 			Axios.post("/api/chart/specificDateChart", variable).then((response) => {
 				if (response.data.success) {
 					setChart(response.data.chart);
-					if (Date !== CurrentWeek) {
+					setCurrentWeek(response.data.week);
+
+					if (response.data.week === Today) {
+						setIsToday(true);
+					} else {
 						setIsToday(false);
 					}
 				} else {
@@ -46,7 +52,7 @@ function LandingPage() {
 		<div>
 			<Row style={{ textAlign: "center" }}>
 				<Col span={8} offset={8}>
-					<h2>{IsToday ? CurrentWeek : Date} Weekly Chart</h2>
+					<h2>{Date ? CurrentWeek : Today} Weekly Chart</h2>
 				</Col>
 				<Col style={{ verticalAlign: "middle" }} span={8}>
 					<form onSubmit={handleSubmit}>
